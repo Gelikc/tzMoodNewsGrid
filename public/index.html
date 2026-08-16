@@ -1,7 +1,50 @@
-<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Настроено — новости в вашем тоне</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"></head>
-<body><header><a class="logo" href="#"><i>н</i><span>настроено</span></a><div class="live"><b></b>Свежая лента</div></header>
-<main><section class="hero"><p class="eyebrow">Новости без новых фактов</p><h1>Одни и те же события.<br><em>Разное настроение.</em></h1><p class="intro">Выберите, как вам хочется услышать сегодняшние новости. Интонация изменится — факты останутся.</p>
-<div class="moods" role="radiogroup"><button data-mood="joy"><span>☼</span><b>Радостно</b><small>Светло и ободряюще</small></button><button data-mood="sad"><span>◡</span><b>Грустно</b><small>Тихо и сочувственно</small></button><button class="active" data-mood="neutral"><span>○</span><b>Нейтрально</b><small>Спокойно и по делу</small></button><button data-mood="ironic"><span>∿</span><b>Иронично</b><small>С тонкой улыбкой</small></button></div></section>
-<section class="feed-head"><div><p class="eyebrow">Главное сейчас</p><h2>Свежие новости</h2></div><button id="refresh" class="refresh">↻ Обновить</button></section><div id="status" class="status">Собираем свежую ленту…</div><section id="news" class="news"></section></main>
-<dialog id="reader"><button class="close" aria-label="Закрыть">×</button><div class="modal-head"><p class="source"></p><h2></h2><div class="meta"></div></div><div class="compare"><article><label>Исходный текст</label><p class="original"></p></article><article class="toned"><label>В выбранном тоне</label><div class="rewritten"></div></article></div><a class="original-link" target="_blank" rel="noopener noreferrer">Открыть оригинал у источника ↗</a></dialog>
-<footer><span>н</span><p>Алгоритм меняет только эмоциональную подачу. Имена, даты, числа и события сохраняются.</p></footer><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Настроено — новости в вашем тоне</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Prata&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/enhancements.css">
+</head>
+<body>
+  <header><a class="logo" href="#"><i>н</i><span>настроено</span></a><div class="live"><b></b>Свежая лента</div></header>
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Новости без новых фактов</p>
+      <h1>Одни и те же события.<br><em>Разное настроение.</em></h1>
+      <p class="intro">Выберите, как вам хочется услышать сегодняшние новости. Интонация изменится — факты останутся.</p>
+      <div class="moods" role="radiogroup" aria-label="Настроение текста">
+        <button role="radio" aria-checked="false" tabindex="-1" data-mood="joy"><span>☼</span><b>Радостно</b><small>Светло и ободряюще</small></button>
+        <button role="radio" aria-checked="false" tabindex="-1" data-mood="sad"><span>◡</span><b>Грустно</b><small>Тихо и сочувственно</small></button>
+        <button role="radio" aria-checked="true" class="active" data-mood="neutral"><span>○</span><b>Нейтрально</b><small>Спокойно и по делу</small></button>
+        <button role="radio" aria-checked="false" tabindex="-1" data-mood="ironic"><span>∿</span><b>Иронично</b><small>С тонкой улыбкой</small></button>
+      </div>
+    </section>
+    <section class="feed-head"><div><p class="eyebrow">Главное сейчас</p><h2>Свежие новости</h2><p id="sync-meta" class="sync-meta"></p></div><button id="refresh" class="refresh">↻ Обновить RSS</button></section>
+    <div id="status" class="status" role="status" aria-live="polite">Загружаем сохранённую ленту…</div>
+    <section id="news" class="news"></section>
+  </main>
+  <dialog id="reader" aria-labelledby="reader-title">
+    <button class="close" aria-label="Закрыть">×</button>
+    <div class="modal-head"><p class="source"></p><h2 id="reader-title"></h2><div class="meta"></div></div>
+    <div class="dialog-moods" role="radiogroup" aria-label="Настроение открытой новости">
+      <span>Тон:</span>
+      <button type="button" role="radio" aria-checked="false" data-mood="joy">Радостно</button>
+      <button type="button" role="radio" aria-checked="false" data-mood="sad">Грустно</button>
+      <button type="button" role="radio" aria-checked="true" class="active" data-mood="neutral">Нейтрально</button>
+      <button type="button" role="radio" aria-checked="false" data-mood="ironic">Иронично</button>
+    </div>
+    <div class="compare">
+      <article><label>Исходный текст — RSS-анонс</label><p class="original-note">Дословный текст из открытой RSS-ленты. Полная публикация доступна на сайте источника.</p><p class="original"></p></article>
+      <article class="toned"><label>В выбранном тоне</label><div class="rewritten" aria-live="polite"></div><p class="generation-meta"></p><button class="regenerate">Перегенерировать</button></article>
+    </div>
+    <a class="original-link" target="_blank" rel="noopener noreferrer">Открыть оригинал у источника ↗</a>
+  </dialog>
+  <footer><span>н</span><p>Алгоритм меняет только эмоциональную подачу. Имена, даты, числа и события сохраняются.</p></footer>
+  <script src="/app.js"></script>
+</body>
+</html>
